@@ -1,3 +1,6 @@
 /PostAndGet.iml
 /target/
 /.idea/
+/src/main/resources/cookie.txt
+/src/main/resources/src.json
+/.settings/
