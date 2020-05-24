@@ -4,3 +4,6 @@
 /src/main/resources/cookie.txt
 /src/main/resources/src.json
 /.settings/
+/.classpath
+/.project
+/out/

@@ -3,9 +3,12 @@ package com.wtychn;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Json {
     JSONObject data;
@@ -33,12 +36,25 @@ public class Json {
     }
 
     //转换为form格式
-    public String toForm() {
-        return data.toString()
-                .replaceAll(":","=")
-                .replaceAll(",","&")
-                .replaceAll("\"","")
-                .replaceAll("[{}]","")
+    public String toForm() throws UnsupportedEncodingException {
+//        JSONObject geo_api_info = data.getJSONObject("geo_api_info");
+//        String gString = geo_api_info.toString();
+//        URLEncoder.encode(gString, "utf-8");
+//        data.put("geo_api_info", gString);
+        String formString = data.toString()
+                .replaceAll(":", "=")
+                .replaceAll(",", "&")
+                .replaceAll("\"", "")
+                .replaceAll("[{}]", "")
                 .trim();
+        //替换所有中文字符
+        Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+");
+        Matcher m = p.matcher(formString);
+        StringBuffer b = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(b, URLEncoder.encode(m.group(0), "UTF-8"));
+        }
+        m.appendTail(b);
+        return b.toString();
     }
 }

@@ -10,7 +10,7 @@ public class JsonTest {
 
     @Test
     public void jsonTest() throws IOException {
-        Json jsonDate = new Json("src\\main\\java\\com\\wtychn\\src.json");
+        Json jsonDate = new Json("src\\main\\resources\\src.json");
         jsonDate.updateDate();
         System.out.println(jsonDate.toForm());
     }
