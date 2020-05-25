@@ -31,23 +31,19 @@ public class Json {
         Date today = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         String dateStr = dateFormat.format(today);
-        System.out.println("日期更改为:" + dateStr);
+        System.out.println("今天的日期:" + dateStr);
         data.put("date", dateStr);
     }
 
     //转换为form格式
     public String toForm() throws UnsupportedEncodingException {
-//        JSONObject geo_api_info = data.getJSONObject("geo_api_info");
-//        String gString = geo_api_info.toString();
-//        URLEncoder.encode(gString, "utf-8");
-//        data.put("geo_api_info", gString);
         String formString = data.toString()
                 .replaceAll(":", "=")
                 .replaceAll(",", "&")
                 .replaceAll("\"", "")
                 .replaceAll("[{}]", "")
                 .trim();
-        //替换所有中文字符
+        //替换所有中文字符为url utf-8格式
         Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+");
         Matcher m = p.matcher(formString);
         StringBuffer b = new StringBuffer();

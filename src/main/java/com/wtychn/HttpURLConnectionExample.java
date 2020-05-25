@@ -1,10 +1,13 @@
 package com.wtychn;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -56,8 +59,8 @@ public class HttpURLConnectionExample {
         con.setRequestProperty("Refer", "https://wxxy.csu.edu.cn/ncov/wap/default/index");
 
         //发送Post请求
-        System.out.println("Sending 'POST' request to URL : " + url);
-        System.out.println("Post parameters : " + urlParameters);
+//        System.out.println("Sending 'POST' request to URL : " + url);
+//        System.out.println("Post parameters : " + urlParameters);
         con.setDoOutput(true);
         con.setDoInput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -67,7 +70,7 @@ public class HttpURLConnectionExample {
 
         //接收response
         int responseCode = con.getResponseCode();
-        System.out.println(responseCode == 200 ? "post成功!" : "post失败!错误代码:" + responseCode);
+        System.out.println(responseCode == 200 ? "发送成功!" : "发送失败!错误代码:" + responseCode);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
@@ -79,7 +82,13 @@ public class HttpURLConnectionExample {
         in.close();
 
         //打印结果
-        System.out.println(response.toString());
+        if (response.toString().startsWith("{")) {
+            JSONObject responseJson = new JSONObject(response.toString());
+            System.out.println(responseJson.getString("m"));
+        } else {
+            System.out.println("发送失败，失败原因：");
+            System.out.println(response.toString());
+        }
 
     }
 
