@@ -87,7 +87,7 @@ public class HttpURLConnectionExample {
             System.out.println(responseJson.getString("m"));
         } else {
             System.out.println("发送失败，失败原因：");
-            System.out.println(response.toString());
+            System.out.println(response);
         }
 
     }

@@ -13,6 +13,10 @@ import java.util.regex.Pattern;
 public class Json {
     JSONObject data;
 
+    public Json(JSONObject jsonObject) {
+        data = jsonObject;
+    }
+
     public Json(String fileName) throws IOException {
         // 读取原始json文件
         File file = new File(fileName);
