@@ -3,15 +3,6 @@ package com.wtychn;
 import org.junit.Test;
 
 public class HttpURLConnectionExampleTest {
-    @Test
-    public void getTest() throws Exception {
-        HttpURLConnectionExample http = new HttpURLConnectionExample();
-
-        String url = "https://cn.bing.com/search?q=java";
-
-        System.out.println("Testing - Send Http GET request");
-        http.sendGet(url);
-    }
 
     @Test
     public void postTest() throws Exception {
