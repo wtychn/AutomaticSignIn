@@ -4,12 +4,38 @@ import de.sstoehr.harreader.model.Har;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.util.*;
 
 public class SignIn {
     private static final Logger logger = LoggerFactory.getLogger(SignIn.class);
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        SignIn signIn = new SignIn();
+        signIn.timer();
+    }
+
+    public void timer() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0); // 控制时
+        calendar.set(Calendar.MINUTE, 10);     // 控制分
+        calendar.set(Calendar.SECOND, 0);      // 控制秒
+
+        Date time = calendar.getTime();        // 得出执行任务的时间,此处为今天的 00：10：00
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                // -------设定要指定任务--------
+                try {
+                    startSignIn();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, time, 1000 * 60 * 60 * 24);// 这里设定将延时每天固定执行
+    }
+
+    private void startSignIn() throws Exception {
         Config config = new Config();
         if(!config.isRunnable()) return;
 
@@ -31,6 +57,5 @@ public class SignIn {
 
             http.sendPost(url, cookiesDate.userCookie, params);
         }
-
     }
 }

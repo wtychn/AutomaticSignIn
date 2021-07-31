@@ -16,6 +16,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class HttpURLConnectionExample {
 
     private static final Logger logger = LoggerFactory.getLogger(HttpURLConnectionExample.class);
+    private static final SendEmail email = new SendEmail();
 
     // HTTP POST请求
     public void sendPost(String url, String cookie, String urlParameters) throws Exception {
@@ -46,6 +47,7 @@ public class HttpURLConnectionExample {
             logger.info("发送完毕!");
         } else {
             logger.warn("发送失败！错误代码：{}", responseCode);
+            email.send("打卡出现问题！", "未发送成功，状态码：" + responseCode);
         }
 
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -63,6 +65,7 @@ public class HttpURLConnectionExample {
             logger.info(responseJson.getString("m"));
         } else {
             logger.warn("发送失败，失败原因：{}", response);
+            email.send("打卡出现问题！", "发送成功，打卡不成功，失败原因：" + response);
         }
 
     }
