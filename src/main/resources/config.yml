@@ -1,1 +1,15 @@
+# 系统是否开启
 status: on
+
+email:
+#  发送邮箱的 host
+  host: smtp.qq.com
+#  用于发送邮件的邮箱
+  user: 45*****79@qq.com
+#  邮箱密码或验证码
+  password: zgaj********biff
+#  目标邮箱
+  target: 45*****79@qq.com
+
+# hars 文件夹的存放位置
+hars: hars

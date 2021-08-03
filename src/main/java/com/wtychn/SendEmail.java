@@ -6,14 +6,17 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.security.GeneralSecurityException;
+import java.util.Map;
 import java.util.Properties;
 
 public class SendEmail {
-    public void send(String title, String message) throws MessagingException, GeneralSecurityException {
-        //创建一个配置文件并保存
-        Properties properties = new Properties();
 
-        properties.setProperty("mail.host", "smtp.qq.com");
+    public void send(String title, String message) throws MessagingException, GeneralSecurityException {
+        final Map emailUsers = (Map) Config.properties.get("email");
+        //创建一个配置文件并保存
+        final Properties properties = new Properties();
+
+        properties.setProperty("mail.host", (String) emailUsers.get("host"));
 
         properties.setProperty("mail.transport.protocol", "smtp");
 
@@ -30,7 +33,7 @@ public class SendEmail {
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("452443579@qq.com", "zgajajampxasbiff");
+                return new PasswordAuthentication((String) emailUsers.get("user"), (String) emailUsers.get("password"));
             }
         });
 
@@ -41,16 +44,16 @@ public class SendEmail {
         Transport transport = session.getTransport();
 
         //连接服务器
-        transport.connect("smtp.qq.com", "452443579@qq.com", "zgajajampxasbiff");
+        transport.connect(properties.getProperty("mail.host"), (String) emailUsers.get("user"), (String) emailUsers.get("password"));
 
         //创建邮件对象
         MimeMessage mimeMessage = new MimeMessage(session);
 
         //邮件发送人
-        mimeMessage.setFrom(new InternetAddress("452443579@qq.com"));
+        mimeMessage.setFrom(new InternetAddress((String) emailUsers.get("user")));
 
         //邮件接收人
-        mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress("452443579@qq.com"));
+        mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress((String) emailUsers.get("target")));
 
         //邮件标题
         mimeMessage.setSubject(title);
@@ -64,4 +67,5 @@ public class SendEmail {
         //关闭连接
         transport.close();
     }
+
 }

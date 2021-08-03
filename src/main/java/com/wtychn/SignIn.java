@@ -3,7 +3,11 @@ package com.wtychn;
 import de.sstoehr.harreader.model.Har;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.*;
 
 public class SignIn {
@@ -45,7 +49,7 @@ public class SignIn {
         System.out.println("自动健康打卡启动...");
 
         HarTransform harTransform = new HarTransform();
-        List<Har> hars = harTransform.readHars("src/main/resources/hars");
+        List<Har> hars = harTransform.readHars((String) Config.properties.get("hars"));
         int idx = 0;
         for (Har har : hars) {
             idx += 1;

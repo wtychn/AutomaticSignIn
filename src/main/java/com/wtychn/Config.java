@@ -9,11 +9,11 @@ import java.util.Map;
 
 public class Config {
     // 首先声明一个Map存解析之后的内容:
-    Map properties;
+    public static Map properties;
 
     // 空的构造函数
     public Config() {
-        initWithString("src/main/resources/config.yml");
+        initWithString("config.yml");
     }
 
     // 以文件路径为条件的构造函数
