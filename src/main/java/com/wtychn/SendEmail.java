@@ -29,11 +29,13 @@ public class SendEmail {
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.ssl.socketFactory", sf);
 
+        final String user = (String) emailUsers.get("user");
+        final String password = (String) emailUsers.get("password");
         //创建一个session对象
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication((String) emailUsers.get("user"), (String) emailUsers.get("password"));
+                return new PasswordAuthentication(user, password);
             }
         });
 
@@ -44,13 +46,13 @@ public class SendEmail {
         Transport transport = session.getTransport();
 
         //连接服务器
-        transport.connect(properties.getProperty("mail.host"), (String) emailUsers.get("user"), (String) emailUsers.get("password"));
+        transport.connect(properties.getProperty("mail.host"), user, password);
 
         //创建邮件对象
         MimeMessage mimeMessage = new MimeMessage(session);
 
         //邮件发送人
-        mimeMessage.setFrom(new InternetAddress((String) emailUsers.get("user")));
+        mimeMessage.setFrom(new InternetAddress(user));
 
         //邮件接收人
         mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress((String) emailUsers.get("target")));

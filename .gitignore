@@ -1,7 +1,7 @@
 /PostAndGet.iml
 /target/
 /.idea/
-/src/main/resources/cookie.txt
+/src/main/resources/config.yml
 /src/main/resources/src.json
 /.settings/
 /.classpath
