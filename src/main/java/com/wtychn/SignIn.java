@@ -45,7 +45,6 @@ public class SignIn {
 
         HttpURLConnectionExample http = new HttpURLConnectionExample();
 
-        String url = "https://wxxy.csu.edu.cn/ncov/wap/default/save";
         System.out.println("自动健康打卡启动...");
 
         HarTransform harTransform = new HarTransform();
@@ -56,6 +55,7 @@ public class SignIn {
             logger.info("正在进行第{}个打卡进程...", idx);
             String params;
             Cookie cookiesDate;
+            String url = harTransform.getURL(har);
             params = harTransform.getParams(har);
             cookiesDate = harTransform.getCookie(har);
 

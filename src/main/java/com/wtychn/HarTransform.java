@@ -3,13 +3,14 @@ package com.wtychn;
 import de.sstoehr.harreader.HarReader;
 import de.sstoehr.harreader.HarReaderException;
 import de.sstoehr.harreader.model.Har;
+import de.sstoehr.harreader.model.HarHeader;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HarTransform {
-    public String getParams(Har har) throws HarReaderException {
+    public String getParams(Har har) {
         return har.getLog()
                 .getEntries()
                 .get(0)
@@ -18,14 +19,27 @@ public class HarTransform {
                 .getText();
     }
 
-    public Cookie getCookie(Har har) {
-        String userCookies = har.getLog()
+    public String getURL(Har har) {
+        return har.getLog()
                 .getEntries()
                 .get(0)
                 .getRequest()
-                .getHeaders()
-                .get(16)
-                .getValue();
+                .getUrl();
+    }
+
+    public Cookie getCookie(Har har) {
+        List<HarHeader> headers = har.getLog()
+                .getEntries()
+                .get(0)
+                .getRequest()
+                .getHeaders();
+        String userCookies = "";
+        for (HarHeader header : headers) {
+            String name = header.getName();
+            if (name.equals("Cookie")) {
+                userCookies = header.getValue();
+            }
+        }
         Cookie res = new Cookie();
         res.setUserCookie(userCookies);
         return res;
